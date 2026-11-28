@@ -21,6 +21,6 @@ def run_tool(session: Session, name: str, raw_args: str) -> dict:
     try:
         return tool.fn(session, args)
     except Exception as e:
-        logging.exception("tool %s failed", e)
+        logging.exception("tool %s failed", name)
         return {"error": "tool failed"}
     
