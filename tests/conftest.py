@@ -48,12 +48,66 @@ def db_session(engine):
 # Fixed dates + known amounts so every expected number below is hand-checkable.
 SAMPLE = [
     # id, vendor, amount, currency, issue, due, status, category
-    (1, "AWS", "100.00", "USD", date(2026, 1, 5), date(2026, 2, 4), InvoiceStatus.PAID, "cloud"),
-    (2, "AWS", "250.50", "USD", date(2026, 2, 10), date(2026, 3, 12), InvoiceStatus.UNPAID, "cloud"),
-    (3, "Figma", "45.00", "USD", date(2026, 1, 20), date(2026, 2, 19), InvoiceStatus.OVERDUE, "software"),
-    (4, "Notion", "12.00", "USD", date(2026, 3, 1), date(2026, 3, 31), InvoiceStatus.PAID, None),
-    (5, "Lenovo", "1999.99", "USD", date(2026, 2, 15), date(2026, 3, 17), InvoiceStatus.PAID, "hardware"),
-    (6, "Hetzner", "80.00", "EUR", date(2026, 2, 1), date(2026, 3, 3), InvoiceStatus.UNPAID, "cloud"),
+    (
+        1,
+        "AWS",
+        "100.00",
+        "USD",
+        date(2026, 1, 5),
+        date(2026, 2, 4),
+        InvoiceStatus.PAID,
+        "cloud",
+    ),
+    (
+        2,
+        "AWS",
+        "250.50",
+        "USD",
+        date(2026, 2, 10),
+        date(2026, 3, 12),
+        InvoiceStatus.UNPAID,
+        "cloud",
+    ),
+    (
+        3,
+        "Figma",
+        "45.00",
+        "USD",
+        date(2026, 1, 20),
+        date(2026, 2, 19),
+        InvoiceStatus.OVERDUE,
+        "software",
+    ),
+    (
+        4,
+        "Notion",
+        "12.00",
+        "USD",
+        date(2026, 3, 1),
+        date(2026, 3, 31),
+        InvoiceStatus.PAID,
+        None,
+    ),
+    (
+        5,
+        "Lenovo",
+        "1999.99",
+        "USD",
+        date(2026, 2, 15),
+        date(2026, 3, 17),
+        InvoiceStatus.PAID,
+        "hardware",
+    ),
+    (
+        6,
+        "Hetzner",
+        "80.00",
+        "EUR",
+        date(2026, 2, 1),
+        date(2026, 3, 3),
+        InvoiceStatus.UNPAID,
+        "cloud",
+    ),
 ]
 
 
@@ -61,8 +115,14 @@ SAMPLE = [
 def sample_invoices(db_session):
     rows = [
         Invoice(
-            id=i, vendor=v, amount=Decimal(a), currency=c,
-            issue_date=iss, due_date=due, status=st, category=cat,
+            id=i,
+            vendor=v,
+            amount=Decimal(a),
+            currency=c,
+            issue_date=iss,
+            due_date=due,
+            status=st,
+            category=cat,
         )
         for i, v, a, c, iss, due, st, cat in SAMPLE
     ]

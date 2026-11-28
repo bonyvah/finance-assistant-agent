@@ -15,6 +15,7 @@ def ids(invoices):
 
 # ---------- list_invoices ----------
 
+
 def test_list_no_filters_returns_all_sorted_by_due_date(db_session, sample_invoices):
     result = svc.list_invoices(db_session, InvoiceFilters())
     assert ids(result) == [1, 3, 6, 2, 5, 4]
@@ -53,6 +54,7 @@ def test_filters_reject_bad_input(bad):
 
 # ---------- get_invoice ----------
 
+
 def test_get_invoice_found(db_session, sample_invoices):
     inv = svc.get_invoice(db_session, 5)
     assert inv is not None and inv.vendor == "Lenovo"
@@ -63,6 +65,7 @@ def test_get_invoice_missing_returns_none(db_session, sample_invoices):
 
 
 # ---------- summarize_spend ----------
+
 
 def rows_by_key(summary):
     return {(r.key, r.currency): (r.total, r.invoice_count) for r in summary.rows}
@@ -107,7 +110,9 @@ def test_summary_date_range_is_inclusive(db_session, sample_invoices):
     s = svc.summarize_spend(
         db_session,
         SpendSummaryArgs(
-            group_by=GroupBy.VENDOR, from_date=date(2026, 2, 1), to_date=date(2026, 2, 15)
+            group_by=GroupBy.VENDOR,
+            from_date=date(2026, 2, 1),
+            to_date=date(2026, 2, 15),
         ),
     )
     # ids 6 (issued 02-01), 2 (02-10), 5 (02-15)
@@ -125,5 +130,7 @@ def test_summary_empty_range(db_session, sample_invoices):
 def test_summary_rejects_inverted_range():
     with pytest.raises(ValidationError):
         SpendSummaryArgs(
-            group_by=GroupBy.VENDOR, from_date=date(2026, 3, 1), to_date=date(2026, 1, 1)
+            group_by=GroupBy.VENDOR,
+            from_date=date(2026, 3, 1),
+            to_date=date(2026, 1, 1),
         )

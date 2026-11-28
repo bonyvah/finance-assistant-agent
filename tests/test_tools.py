@@ -26,7 +26,9 @@ def test_search_invoices(db_session, sample_invoices):
 
 
 def test_summarize_spend(db_session, sample_invoices):
-    out = run_tool(db_session, "summarize_spend", '{"group_by": "vendor", "status": "paid"}')
+    out = run_tool(
+        db_session, "summarize_spend", '{"group_by": "vendor", "status": "paid"}'
+    )
     assert out["summary"]["totals"] == {"USD": "2111.99"}
 
 

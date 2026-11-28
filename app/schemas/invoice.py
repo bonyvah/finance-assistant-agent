@@ -66,6 +66,7 @@ class InvoiceFilters(BaseModel):
         ),
     ] = 50
 
+
 class GroupBy(StrEnum):
     VENDOR = "vendor"
     CATEGORY = "category"
@@ -77,19 +78,27 @@ class SpendSummaryArgs(BaseModel):
 
     group_by: Annotated[
         GroupBy,
-        Field(description="Dimension to group totals by: 'vendor', 'category' or 'status'"),
+        Field(
+            description="Dimension to group totals by: 'vendor', 'category' or 'status'"
+        ),
     ]
     from_date: Annotated[
         date | None,
-        Field(description="ISO date (YYYY-MM-DD). Only invoices issued on or after this date"),
+        Field(
+            description="ISO date (YYYY-MM-DD). Only invoices issued on or after this date"
+        ),
     ] = None
     to_date: Annotated[
         date | None,
-        Field(description="ISO date (YYYY-MM-DD). Only invoices issued on or before this date"),
+        Field(
+            description="ISO date (YYYY-MM-DD). Only invoices issued on or before this date"
+        ),
     ] = None
     status: Annotated[
         InvoiceStatus | None,
-        Field(description="Only count invoices with this status; use 'paid' for actual spend, omit for all"),
+        Field(
+            description="Only count invoices with this status; use 'paid' for actual spend, omit for all"
+        ),
     ] = None
 
     @model_validator(mode="after")
@@ -109,4 +118,6 @@ class SpendSummaryRow(BaseModel):
 class SpendSummaryOut(BaseModel):
     group_by: GroupBy
     rows: list[SpendSummaryRow]
-    totals: dict[str, Decimal]  # grand total per currency, e.g. {"USD": Decimal("1234.50")}
+    totals: dict[
+        str, Decimal
+    ]  # grand total per currency, e.g. {"USD": Decimal("1234.50")}
